@@ -32,8 +32,13 @@
     }
 </style>
 
-<select asp-items="Model.Categories" class="form-control mb-3"></select>
-<select asp-items="Model.Authors" class="form-control mb-3"></select>
+<form class="form-inline py-3">
+    <label class="mr-1">Category: </label>
+    <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control mr-0 mr-sm-2"></select>
+    <label class="mr-1 mt-2 mt-sm-0">Author: </label>
+    <select asp-for="AuthorId" asp-items="Model.Authors" class="form-control"></select>
+
+</form>
 <div class="row mx-md-n2">
     @foreach (var product in Model.Products)
     {
@@ -53,3 +58,11 @@
         </div>
     }
 </div>
+
+@section scripts {
+    <script>
+        $("#CategoryId,#AuthorId").change(function () {
+            $(this).closest("form").submit();
+        });
+    </script>
+}

@@ -9,7 +9,7 @@ namespace Web.Interfaces
 {
     public interface IHomeViewModelService
     {
-        Task<HomeIndexViewModel> GetHomeIndexViewModel();
+        Task<HomeIndexViewModel> GetHomeIndexViewModel(int? categoryId, int? authorId);
         Task<List<SelectListItem>> GetCategories();
         Task<List<SelectListItem>> GetAuthors();
     }
