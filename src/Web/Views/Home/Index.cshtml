@@ -29,6 +29,7 @@
     .product-price {
         text-align: center;
         font-size: .8rem;
+        margin-bottom: .2rem;
     }
 </style>
 
@@ -42,7 +43,7 @@
 <div class="row mx-md-n2">
     @foreach (var product in Model.Products)
     {
-        <div class="col-md-3 px-md-2 mb-3">
+        <div class="col-md-3 px-md-2 mb-4 d-flex flex-column align-items-center ">
             <div class="product-image-wrapper">
                 <img src="~/img/@product.PictureUri" class="product-image" />
             </div>
@@ -55,9 +56,14 @@
             <div class="product-price">
                 <p>@product.Price.ToString("c2")</p>
             </div>
+            <button class="btn btn-success btn-sm mt-auto">
+                <i class="fas fa-cart-plus"></i> Add to Basket
+            </button>
         </div>
     }
 </div>
+
+<partial name="_PaginationPartial" model="Model.PaginationInfo" />
 
 @section scripts {
     <script>
