@@ -5,3 +5,10 @@ Update-Database -Context Infrastructure.Data.AppDbContext
 
 Add-Migration InitialIdentity -OutputDir Identity/Migrations -Context Infrastructure.Identity.AppIdentityDbContext -StartupProject Web
 Update-Database -Context Infrastructure.Identity.AppIdentityDbContext
+
+For the second migration
+
+First set src/Infrastructure as default project in Package Manager Console
+
+Add-Migration OrderBasketAdded -OutputDir Data/Migrations -Context Infrastructure.Data.AppDbContext -StartupProject Web
+Update-Database -Context Infrastructure.Data.AppDbContext
