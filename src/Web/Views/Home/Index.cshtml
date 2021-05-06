@@ -1,6 +1,12 @@
 ﻿@model HomeIndexViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@*Creating AntiForgeryToken InViews*@
+@*https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-5.0#javascript*@
+
+
 @{
     ViewData["Title"] = "Home Page";
+    var token = Xsrf.GetAndStoreTokens(Context).RequestToken;
 }
 
 <style>
@@ -56,9 +62,9 @@
             <div class="product-price">
                 <p>@product.Price.ToString("c2")</p>
             </div>
-            <button class="btn btn-success btn-sm mt-auto">
+            <a href="#" class="btn btn-success btn-sm mt-auto" data-add-to-basket="@product.Id">
                 <i class="fas fa-cart-plus"></i> Add to Basket
-            </button>
+            </a>
         </div>
     }
 </div>
@@ -67,8 +73,28 @@
 
 @section scripts {
     <script>
-        $("#CategoryId,#AuthorId").change(function () {
-            $(this).closest("form").submit();
-        });
+            $("#CategoryId,#AuthorId").change(function () {
+                $(this).closest("form").submit();
+            });
+
+            $("[data-add-to-basket]").click(function (event) {
+                event.preventDefault();
+                var productId = $(this).data('add-to-basket');
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddToBasket","Basket")",
+                    headers: {
+                        RequestVerificationToken: "@token",
+                    },
+                    data: {
+                        productId: productId,
+                        quantity:1
+                    },
+                    success: function (data) {
+                        $("#navBasketItemsCount").text(data.basketItemsCount);
+                    }
+                });
+            });
     </script>
 }
